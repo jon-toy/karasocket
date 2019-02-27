@@ -3,7 +3,11 @@ const defaultState = {
   sessionIp: "192.168.1.14",
   connected: false,
   currentSong: {},
-  queue: []
+  searchTerm: "",
+  queue: [],
+  modalShow: false,
+  modalContent: null,
+  searchResults: [],
 };
 
 export default defaultState;

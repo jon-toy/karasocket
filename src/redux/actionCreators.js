@@ -1,5 +1,5 @@
 import {initializeWebSocket, sendMessage, closeWebSocket } from '../websocket';
-import { JOIN_IP_CHANGED, SEARCH , SINGER_NAME_CHANGED} from './actionTypes';
+import { JOIN_IP_CHANGED, SINGER_NAME_CHANGED, SEARCH_TERM_CHANGED, HIDE_MODAL } from './actionTypes';
 
 export function joinIpChanged(ip) {
     return {
@@ -27,12 +27,21 @@ export function leaveSession() {
     };
 }  
 
-export function search(term) {
-    
-    sendMessage('<action type="search" offset="{offset}" limit="{limit}">' + term + '</action>');
-
-    return {
-        type: SEARCH,
-        payload: {data:"Hiyo"}
+export function doSearch(term) {
+    return (dispatch) => {
+        sendMessage('<action type="search" offset="{offset}" limit="{limit}">' + term + '</action>')
     };
+}
+
+export function searchTermChanged(term) {
+    return {
+        type: SEARCH_TERM_CHANGED,
+        payload: term
+    }
+}
+
+export function hideModal() {
+    return {
+        type: HIDE_MODAL
+    }
 }

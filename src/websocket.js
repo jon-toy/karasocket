@@ -1,6 +1,7 @@
-import { JOIN_SESSION, DISCONNECTED, QUEUE_UPDATED } from './redux/actionTypes';
+import { JOIN_SESSION, DISCONNECTED, QUEUE_UPDATED, SEARCH, SHOW_MODAL } from './redux/actionTypes';
 import convert from 'xml-js'; 
-import { getQueueFromXmlResponse } from './karafunXml';
+import { getQueueFromXmlResponse, getListFromXmlResponse } from './karafunXml';
+import { MODAL_SEARCH } from './constants';
 
 let websocket;
 export function initializeWebSocket(dispatch, ip) {
@@ -10,11 +11,30 @@ export function initializeWebSocket(dispatch, ip) {
         websocket = new WebSocket('ws://' + ip + ':57570');
     
         websocket.onmessage = message => {
-            let queue = getQueueFromXmlResponse(convert.xml2js(message.data, {compact: true}));
-            dispatch({
-                type: QUEUE_UPDATED,
-                payload: queue
-            })
+            let response = convert.xml2js(message.data, {compact: true});
+            console.log(response);
+
+            if (response.status && response.status.queue) {
+                let queue = getQueueFromXmlResponse(response.status.queue);
+                dispatch({
+                    type: QUEUE_UPDATED,
+                    payload: queue
+                })
+            }
+
+            if (response.list) {
+                let list = getListFromXmlResponse(response.list);
+                dispatch({
+                    type: SEARCH,
+                    payload: list
+                })
+                
+                // Show the modal results
+                dispatch({
+                    type: SHOW_MODAL,
+                    payload: MODAL_SEARCH
+                })
+            }
         };
 
         dispatch({
@@ -38,10 +58,5 @@ export function closeWebSocket(dispatch) {
 }
 
 export function sendMessage(message) {
-    websocket.send(message);
-}
-
-function parseResponse(response) {
-    // Do a switch statement here based on the response type (Status, list, etc). Then dispatch state accordingly
-
+    if (websocket) websocket.send(message);
 }
