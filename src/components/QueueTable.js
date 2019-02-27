@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.secondary.dark,
     color: theme.palette.common.white,
   },
   body: {
