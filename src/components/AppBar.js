@@ -27,6 +27,13 @@ const styles = theme => ({
       display: 'block',
     },
   },
+  disconnectedTitle: {
+    display: 'none',
+    paddingRight: 24,
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+    },
+  },
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -73,7 +80,14 @@ const styles = theme => ({
 function SearchAppBar(props) {
   const { classes, connected, doSearch, searchTerm, searchTermChanged } = props;
 
-  let search = <div></div>;
+  let search = (
+    <div>
+      <Typography variant="h6" color="inherit" className={classes.disconnectedTitle} noWrap>
+        KaraSocket
+      </Typography>
+    </div>
+  );
+  
   if (connected) {
     search = (
       <div className={classes.search}>

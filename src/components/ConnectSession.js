@@ -2,12 +2,14 @@ import React from 'react'
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
 import { connect } from 'react-redux';
 import { joinSession, joinIpChanged, leaveSession, singerNameChanged } from '../redux/actionCreators';
-
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const disconnected = grey['200'];
 
@@ -39,12 +41,32 @@ const styles = theme => ({
     status: {
       width: '100%',
       backgroundColor: disconnected,
-      padding: 5,
+      paddingTop: 5,
+      paddingBottom: 5,
+      paddingLeft: 0,
+      paddingRight: 0
     },
+    titleText: {
+        paddingLeft: theme.spacing.unit,
+        paddingRight: theme.spacing.unit
+    },
+    panel: {
+        width: '100%'
+    }
   });
   
 
 class ConnectSession extends React.Component {
+    state = {
+        expanded: true,
+      };
+
+    handleChange = () => {
+        this.setState({
+            expanded: !this.state.expanded
+        });
+    };
+
     render() {
         const { classes } = this.props;
 
@@ -62,6 +84,9 @@ class ConnectSession extends React.Component {
             button = (
                 <Button variant="contained" color="primary" className={classes.button} onClick={() =>  {
                     this.props.joinSession(this.props.sessionIp)
+                    this.setState({
+                        expanded: false
+                    });
                 }}>
                     Connect
                 </Button> 
@@ -69,35 +94,30 @@ class ConnectSession extends React.Component {
         }
         
         return (
-            <Paper>
-                <div className={classes.container}>
-                    <div className={classes.status}>
-                        <Typography variant="subtitle2" align="center">
-                            Status: <span>{this.props.connected ? "Connected" : "Disconnected"}</span>
-                        </Typography>
-                    </div>
-                    <div className={classes.fields}>
-                    <TextField
-                        label="Singer Name"
-                        className={classes.textField}
-                        value={this.props.singerName}
-                        onChange={event => this.props.singerNameChanged(event.target.value)}
-                        margin="normal"
-                        >
-                        </TextField>
+            <div className={classes.container}>
+                <ExpansionPanel className={classes.panel} expanded={this.state.expanded}>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} className={classes.status} onClick={this.handleChange}>
+                        <Typography className={classes.titleText} variant="subtitle2" align="center">Status: <span>{this.props.connected ? "Connected" : "Disconnected"}</span></Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails className={classes.fields}>
                         <TextField
-                        label="IP Address"
-                        className={classes.textField}
-                        value={this.props.sessionIp}
-                        onChange={event => this.props.joinIpChanged(event.target.value)}
-                        margin="normal"
-                        >
-                        </TextField>
+                            label="Singer Name"
+                            className={classes.textField}
+                            value={this.props.singerName}
+                            onChange={event => this.props.singerNameChanged(event.target.value)}
+                            margin="normal"
+                        />
+                        <TextField
+                            label="IP Address"
+                            className={classes.textField}
+                            value={this.props.sessionIp}
+                            onChange={event => this.props.joinIpChanged(event.target.value)}
+                            margin="normal"
+                        />
                         {button}
-                    </div>
-                    
-                </div>
-            </Paper>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+            </div>
         );
     }
 }

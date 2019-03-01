@@ -27,7 +27,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    
   },
   row: {
     '&:nth-of-type(odd)': {
@@ -47,7 +47,6 @@ function QueueTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <CustomTableCell>#</CustomTableCell>
             <CustomTableCell align="center">Singer</CustomTableCell>
             <CustomTableCell align="center">Song</CustomTableCell>
             <CustomTableCell align="center">Artist</CustomTableCell>
@@ -57,9 +56,6 @@ function QueueTable(props) {
         <TableBody>
           {props.queue.map((row, index) => (
             <TableRow className={classes.row} key={index}>
-              <CustomTableCell component="td" scope="row">
-                {index+1}
-              </CustomTableCell>
               <CustomTableCell align="left">{row.singer}</CustomTableCell>
               <CustomTableCell align="left">{row.title}</CustomTableCell>
               <CustomTableCell align="left">{row.artist}</CustomTableCell>

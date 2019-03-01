@@ -12,7 +12,6 @@ import Dialog from '@material-ui/core/Dialog';
 import { hideModal } from './redux/actionCreators';
 import { MODAL_SEARCH } from './constants';
 import SearchResults from './components/modals/SearchResults';
-import DialogContent from '@material-ui/core/DialogContent';
 import Slide from '@material-ui/core/Slide';
 
 const theme = createMuiTheme({
