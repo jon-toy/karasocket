@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import AppBar from './components/AppBar';
 import QueueTable from './components/QueueTable';
 import ConnectSession from './components/ConnectSession';
-import Paper from '@material-ui/core/Paper';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import pink from '@material-ui/core/colors/pink';
 import lightGreen from '@material-ui/core/colors/lightGreen';
 import Modal from '@material-ui/core/Modal';
@@ -20,6 +20,12 @@ const theme = createMuiTheme({
   }
 });
 
+const styles = theme => ({
+  karaBody: {
+    margin: theme.spacing.unit * 2
+  },
+});
+
 class App extends React.Component {
 
     handleClose = () => {
@@ -27,6 +33,8 @@ class App extends React.Component {
     }
 
     render() {
+
+      const { classes } = this.props;
 
       let modalContentView = <div></div>;
 
@@ -40,10 +48,15 @@ class App extends React.Component {
             <header className="App-header">
                 <AppBar/>
             </header>
-            <main>
-                <Paper>&nbsp;</Paper>
-                <ConnectSession/>
-                <QueueTable/>
+            <main className={classes.karaBody}>
+              <Grid container spacing={16}>
+                <Grid item xs={12} sm={10}>
+                  <ConnectSession/>
+                </Grid>
+                <Grid item xs={12} sm={10}>
+                  <QueueTable/>
+                </Grid>
+              </Grid>
                 <Modal
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"
@@ -72,4 +85,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App));
