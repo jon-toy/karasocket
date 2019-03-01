@@ -7,6 +7,8 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import { doSearch, searchTermChanged } from '../redux/actionCreators';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
@@ -69,7 +71,28 @@ const styles = theme => ({
 });
 
 function SearchAppBar(props) {
-  const { classes } = props;
+  const { classes, connected, doSearch, searchTerm, searchTermChanged } = props;
+
+  let search = <div></div>;
+  if (connected) {
+    search = (
+      <div className={classes.search}>
+        <form onSubmit={(e) => doSearch(e, searchTerm)}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            value={searchTerm}
+            onChange={(event) => searchTermChanged(event.target.value)}
+          />
+        </form>
+      </div>);
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -81,18 +104,7 @@ function SearchAppBar(props) {
             KaraSocket
           </Typography>
           <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
-          </div>
+          {search}
         </Toolbar>
       </AppBar>
     </div>
@@ -103,4 +115,21 @@ SearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SearchAppBar);
+function mapStateToProps(state) {
+  return {
+      searchTerm: state.searchTerm,
+      connected: state.connected
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    doSearch: (event, searchTerm) => {
+      event.preventDefault();
+      dispatch(doSearch(searchTerm));
+    },
+    searchTermChanged: (term) => dispatch(searchTermChanged(term))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchAppBar));
