@@ -28,7 +28,7 @@ export function leaveSession() {
 }  
 
 export function doSearch(term) {
-    return (dispatch) => {
+    return () => {
         sendMessage('<action type="search" offset="{offset}" limit="{limit}">' + term + '</action>')
     };
 }
@@ -43,5 +43,11 @@ export function searchTermChanged(term) {
 export function hideModal() {
     return {
         type: HIDE_MODAL
+    }
+}
+
+export function addToQueue(id, singer) {
+    return () => {
+        sendMessage('<action type="addToQueue" song="' + id + '" singer="' + singer + '" >99999</action>')
     }
 }

@@ -7,12 +7,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
+import { addToQueue } from '../../redux/actionCreators';
 
 const styles = theme => ({
     paper: {
       position: 'absolute',
       width: 800,
-      maxHeight: '100vh',
+      maxHeight: '80vh',
       overflowY: 'scroll',
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
@@ -31,6 +33,12 @@ const styles = theme => ({
         '&:nth-of-type(odd)': {
             backgroundColor: theme.palette.background.default,
         },
+    },
+    button: {
+        margin: theme.spacing.unit,
+      },
+    input: {
+        display: 'none',
     },
   });
 
@@ -56,7 +64,7 @@ const CustomTableCell = withStyles(theme => ({
   }))(TableCell);
 
 function Modal(props) {
-    const { classes } = props;
+    const { classes, singerName, addToQueue } = props;
     return (
         <div style={getModalStyle()} className={classes.paper}>
             <Typography variant="h6" align="center">
@@ -77,7 +85,14 @@ function Modal(props) {
                     <CustomTableCell align="right">{row.title}</CustomTableCell>
                     <CustomTableCell align="right">{row.artist}</CustomTableCell>
                     <CustomTableCell align="right">{row.duration}</CustomTableCell>
-                    <CustomTableCell align="right">Add To Queue</CustomTableCell>
+                    <CustomTableCell align="right">
+                    <Button color="primary" className={classes.button}
+                        onClick={() => {
+                            addToQueue(row.id, singerName)
+                        }}>
+                        Add to Queue
+                    </Button>
+                    </CustomTableCell>
                     </TableRow>
                 ))}
                 </TableBody>
@@ -91,8 +106,17 @@ const SearchResults = withStyles(styles)(Modal);
 
 function mapStateToProps(state) {
     return {
-        searchResults: state.searchResults
+        searchResults: state.searchResults,
+        singerName: state.singerName
     }
   }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addToQueue: (id, singerName) => {
+            dispatch(addToQueue(id, singerName)) 
+        }
+    }
+}
   
-export default connect(mapStateToProps)(SearchResults);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);

@@ -1,4 +1,5 @@
 import { JOIN_SESSION, DISCONNECTED, QUEUE_UPDATED, SEARCH, SHOW_MODAL } from './redux/actionTypes';
+import { hideModal } from './redux/actionCreators';
 import convert from 'xml-js'; 
 import { getQueueFromXmlResponse, getListFromXmlResponse } from './karafunXml';
 import { MODAL_SEARCH } from './constants';
@@ -20,6 +21,8 @@ export function initializeWebSocket(dispatch, ip) {
                     type: QUEUE_UPDATED,
                     payload: queue
                 })
+
+                dispatch(hideModal());
             }
 
             if (response.list) {
