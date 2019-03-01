@@ -4,8 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import grey from '@material-ui/core/colors/grey';
 import { connect } from 'react-redux';
 import { joinSession, joinIpChanged, leaveSession, singerNameChanged } from '../redux/actionCreators';
+
+
+const disconnected = grey['200'];
 
 const styles = theme => ({
     container: {
@@ -13,6 +17,8 @@ const styles = theme => ({
       flexWrap: 'wrap',
     },
     fields: {
+      display: 'flex',
+      alignItems: 'center',
       textAlign: 'center',
       width: '100%'
     },
@@ -31,7 +37,9 @@ const styles = theme => ({
       margin: theme.spacing.unit,
     },
     status: {
-      width: '100%'
+      width: '100%',
+      backgroundColor: disconnected,
+      padding: 5,
     },
   });
   
@@ -64,7 +72,7 @@ class ConnectSession extends React.Component {
             <Paper>
                 <div className={classes.container}>
                     <div className={classes.status}>
-                        <Typography variant="h6" align="center">
+                        <Typography variant="subtitle2" align="center">
                             Status: <span>{this.props.connected ? "Connected" : "Disconnected"}</span>
                         </Typography>
                     </div>

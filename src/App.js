@@ -19,7 +19,10 @@ const theme = createMuiTheme({
   palette: {
     primary: pink,
     secondary: lightGreen
-  }
+  },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 const styles = theme => ({
@@ -55,11 +58,14 @@ class App extends React.Component {
                 <AppBar/>
             </header>
             <main className={classes.karaBody}>
-              <Grid container spacing={16}>
-                <Grid item xs={12} sm={10}>
+              <Grid container
+                spacing={16}
+                justify="center"
+                alignItems="center">
+                <Grid item xs={11} sm={10}>
                   <ConnectSession/>
                 </Grid>
-                <Grid item xs={12} sm={10}>
+                <Grid item xs={11} sm={10}>
                   <QueueTable/>
                 </Grid>
               </Grid>
