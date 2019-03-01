@@ -1,5 +1,5 @@
 import {initializeWebSocket, sendMessage, closeWebSocket } from '../websocket';
-import { JOIN_IP_CHANGED, SINGER_NAME_CHANGED, SEARCH_TERM_CHANGED, HIDE_MODAL } from './actionTypes';
+import { JOIN_IP_CHANGED, SINGER_NAME_CHANGED, SEARCH_TERM_CHANGED, HIDE_MODAL, SONG_SELECTED } from './actionTypes';
 
 export function joinIpChanged(ip) {
     return {
@@ -49,5 +49,12 @@ export function hideModal() {
 export function addToQueue(id, singer) {
     return () => {
         sendMessage('<action type="addToQueue" song="' + id + '" singer="' + singer + '" >99999</action>')
+    }
+}
+
+export function selectSong(id) {
+    return {
+        type: SONG_SELECTED,
+        payload: id
     }
 }

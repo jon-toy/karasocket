@@ -1,11 +1,12 @@
 export function getQueueFromXmlResponse(rawQueue) {
     if (Array.isArray(rawQueue.item)) {
-        return rawQueue.item.map(item => {
+        return rawQueue.item.map((item, index) => {
             return {
                 artist: item.artist._text,
                 duration: item.duration._text,
                 singer: item.singer._text,
-                title: item.title._text
+                title: item.title._text,
+                position: index+1
             }
         });
     }
@@ -15,7 +16,8 @@ export function getQueueFromXmlResponse(rawQueue) {
                 artist: rawQueue.item.artist._text,
                 duration: rawQueue.item.duration._text,
                 singer: rawQueue.item.singer._text,
-                title: rawQueue.item.title._text
+                title: rawQueue.item.title._text,
+                position: 1
             }
         ];
     }

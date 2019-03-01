@@ -48,22 +48,22 @@ function QueueTable(props) {
         <TableHead>
           <TableRow>
             <CustomTableCell>#</CustomTableCell>
-            <CustomTableCell align="right">Singer</CustomTableCell>
-            <CustomTableCell align="right">Song</CustomTableCell>
-            <CustomTableCell align="right">Artist</CustomTableCell>
-            <CustomTableCell align="right">Duration</CustomTableCell>
+            <CustomTableCell align="center">Singer</CustomTableCell>
+            <CustomTableCell align="center">Song</CustomTableCell>
+            <CustomTableCell align="center">Artist</CustomTableCell>
+            <CustomTableCell align="center">Duration</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.queue.map((row, index) => (
             <TableRow className={classes.row} key={index}>
-              <CustomTableCell component="th" scope="row">
+              <CustomTableCell component="td" scope="row">
                 {index+1}
               </CustomTableCell>
-              <CustomTableCell align="right">{row.singer}</CustomTableCell>
-              <CustomTableCell align="right">{row.title}</CustomTableCell>
-              <CustomTableCell align="right">{row.artist}</CustomTableCell>
-              <CustomTableCell align="right">{row.duration}</CustomTableCell>
+              <CustomTableCell align="left">{row.singer}</CustomTableCell>
+              <CustomTableCell align="left">{row.title}</CustomTableCell>
+              <CustomTableCell align="left">{row.artist}</CustomTableCell>
+              <CustomTableCell align="left">{row.duration}</CustomTableCell>
             </TableRow>
           ))}
         </TableBody>

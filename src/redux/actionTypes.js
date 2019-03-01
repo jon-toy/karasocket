@@ -12,3 +12,5 @@ export const HIDE_MODAL = "hide_modal";
 // Search
 export const SEARCH = "search";
 export const SEARCH_TERM_CHANGED = "search_term_changed";
+
+export const SONG_SELECTED = "song_selected";

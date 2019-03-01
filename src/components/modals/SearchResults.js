@@ -8,115 +8,77 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
-import { addToQueue } from '../../redux/actionCreators';
+import { addToQueue, hideModal, selectSong } from '../../redux/actionCreators';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
-    paper: {
-      position: 'absolute',
-      width: 800,
-      maxHeight: '80vh',
-      overflowY: 'scroll',
-      backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing.unit * 4,
-      outline: 'none',
-    },
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-        overflowX: 'auto',
+    appBar: {
+        position: 'relative',
+        width: '100%'
       },
-    table: {
-        minWidth: 700,
-    },
-    row: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.background.default,
-        },
-    },
-    button: {
-        margin: theme.spacing.unit,
-      },
-    input: {
-        display: 'none',
+    flex: {
+        flex: 1,
     },
   });
 
-function getModalStyle() {
-    const top = 50;
-    const left = 50;
+function SearchResults(props) {
+    const { classes, singerName, addToQueue, hideModal, selectedSong, selectSong } = props;
 
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-    };
-}
-
-const CustomTableCell = withStyles(theme => ({
-    head: {
-      backgroundColor: theme.palette.secondary.dark,
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 14,
-    },
-  }))(TableCell);
-
-function Modal(props) {
-    const { classes, singerName, addToQueue } = props;
     return (
-        <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h6" align="center">
-                Search Results
-            </Typography>
-            <Table className={classes.table}>
-                <TableHead>
-                <TableRow>
-                    <CustomTableCell align="right">Song</CustomTableCell>
-                    <CustomTableCell align="right">Artist</CustomTableCell>
-                    <CustomTableCell align="right">Duration</CustomTableCell>
-                    <CustomTableCell align="right"></CustomTableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {props.searchResults.map((row, index) => (
-                    <TableRow className={classes.row} key={index}>
-                    <CustomTableCell align="right">{row.title}</CustomTableCell>
-                    <CustomTableCell align="right">{row.artist}</CustomTableCell>
-                    <CustomTableCell align="right">{row.duration}</CustomTableCell>
-                    <CustomTableCell align="right">
-                    <Button color="primary" className={classes.button}
-                        onClick={() => {
-                            addToQueue(row.id, singerName)
-                        }}>
-                        Add to Queue
-                    </Button>
-                    </CustomTableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-          </div>
+        <div>
+            <AppBar className={classes.appBar}>
+                <Toolbar>
+                <IconButton color="inherit" onClick={hideModal} aria-label="Close">
+                    <CloseIcon />
+                </IconButton>
+                <Typography variant="h6" color="inherit" className={classes.flex}>
+                    Search Results
+                </Typography>
+                <Button color="inherit" onClick={() => addToQueue(selectedSong, singerName)}>
+                    Add to Queue
+                </Button>
+                </Toolbar>
+            </AppBar>
+            <List>
+                {
+                    props.searchResults.map(row => (
+                        <div>
+                            <ListItem 
+                                button 
+                                selected={selectedSong === row.id}
+                                onClick={() => selectSong(row.id)}>
+                                <ListItemText primary={row.title} secondary={row.artist} />
+                            </ListItem>
+                            <Divider/>
+                        </div>
+                    ))
+                }
+            </List>
+        </div>
     );
 }
-
-// We need an intermediary variable for handling the recursive nesting.
-const SearchResults = withStyles(styles)(Modal);
 
 function mapStateToProps(state) {
     return {
         searchResults: state.searchResults,
-        singerName: state.singerName
+        singerName: state.singerName,
+        selectedSong: state.selectedSong
     }
   }
 
 function mapDispatchToProps(dispatch) {
     return {
-        addToQueue: (id, singerName) => {
-            dispatch(addToQueue(id, singerName)) 
-        }
+        addToQueue: (id, singerName) => dispatch(addToQueue(id, singerName)),
+        hideModal: () => dispatch(hideModal()),
+        selectSong: (id) => dispatch(selectSong(id))
     }
 }
   
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResults);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchResults));

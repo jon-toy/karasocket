@@ -8,10 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
 import pink from '@material-ui/core/colors/pink';
 import lightGreen from '@material-ui/core/colors/lightGreen';
-import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
 import { hideModal } from './redux/actionCreators';
 import { MODAL_SEARCH } from './constants';
 import SearchResults from './components/modals/SearchResults';
+import DialogContent from '@material-ui/core/DialogContent';
+import Slide from '@material-ui/core/Slide';
 
 const theme = createMuiTheme({
   palette: {
@@ -25,6 +27,10 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2
   },
 });
+
+function Transition(props) {
+  return <Slide direction="down" {...props} />;
+}
 
 class App extends React.Component {
 
@@ -57,14 +63,16 @@ class App extends React.Component {
                   <QueueTable/>
                 </Grid>
               </Grid>
-                <Modal
+                <Dialog
+                  fullScreen
                   aria-labelledby="simple-modal-title"
                   aria-describedby="simple-modal-description"
                   open={this.props.modalShow}
                   onClose={this.props.hideModal}
+                  TransitionComponent={Transition}
                 > 
                   {modalContentView}
-                </Modal>
+                </Dialog>
             </main>
           </MuiThemeProvider>
         </div>

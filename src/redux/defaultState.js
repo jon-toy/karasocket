@@ -1,6 +1,6 @@
 const defaultState = {
   singerName: "",
-  sessionIp: "192.168.1.14",
+  sessionIp: "68.231.71.239",
   connected: false,
   currentSong: {},
   searchTerm: "",
@@ -8,6 +8,7 @@ const defaultState = {
   modalShow: false,
   modalContent: null,
   searchResults: [],
+  selectedSong: null,
 };
 
 export default defaultState;

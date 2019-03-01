@@ -7,11 +7,11 @@ import {
   SEARCH_TERM_CHANGED, 
   SEARCH, 
   SHOW_MODAL,
-  HIDE_MODAL
+  HIDE_MODAL,
+  SONG_SELECTED
 } from "./actionTypes";
   
   export default function Reducer(state = {}, action = {}) {
-  
     switch (action.type) {
       case QUEUE_UPDATED:
         const queue = action.payload;
@@ -37,6 +37,9 @@ import {
         return { ...state, modalShow: true, modalContent }
       case HIDE_MODAL:
         return { ...state, modalShow: false }
+      case SONG_SELECTED:
+        const selectedSong = action.payload;
+        return { ...state, selectedSong }
       default:
         return state;
     }

@@ -7,7 +7,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync build/ s3://karasocket.com"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,11 @@
   "bugs": {
     "url": "https://github.com/jon-toy/karasocket/issues"
   },
-  "homepage": "https://github.com/jon-toy/karasocket#readme",
+  "homepage": "http://karasocket.com.s3-website-us-west-1.amazonaws.com",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "material-table": "^1.19.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
