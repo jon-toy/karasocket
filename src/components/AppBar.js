@@ -22,17 +22,7 @@ const styles = theme => ({
     marginRight: 20,
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
-  disconnectedTitle: {
-    display: 'none',
-    paddingRight: 24,
-    [theme.breakpoints.down('xs')]: {
-      display: 'block',
-    },
+    display: 'block'
   },
   search: {
     position: 'relative',
@@ -82,9 +72,6 @@ function SearchAppBar(props) {
 
   let search = (
     <div>
-      <Typography variant="h6" color="inherit" className={classes.disconnectedTitle} noWrap>
-        KaraSocket
-      </Typography>
     </div>
   );
   
