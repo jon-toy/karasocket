@@ -44,7 +44,7 @@ function SingerAvatar(props) {
     return (
         <div className={cover}>
             <Typography variant="h1" className={classes.letter}>
-                {song && song.singer && song.singer.length > 0 ? song.singer.charAt(0).toUpperCase() : '~'}
+                {song && song.singer && song.singer.length > 0 ? song.singer.charAt(0).toUpperCase() : '♪'}
             </Typography>
         </div>
     );
