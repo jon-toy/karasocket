@@ -10,6 +10,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Grid from '@material-ui/core/Grid';
 
 const disconnected = grey['200'];
 
@@ -22,7 +23,8 @@ const styles = theme => ({
       display: 'flex',
       alignItems: 'center',
       textAlign: 'center',
-      width: '100%'
+      width: '100%',
+      padding: '0 0 20px 0'
     },
     textField: {
       marginLeft: theme.spacing.unit,
@@ -100,21 +102,29 @@ class ConnectSession extends React.Component {
                         <Typography className={classes.titleText} variant="subtitle2" align="center">Status: <span>{this.props.connected ? "Connected" : "Disconnected"}</span></Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.fields}>
-                        <TextField
-                            label="Singer Name"
-                            className={classes.textField}
-                            value={this.props.singerName}
-                            onChange={event => this.props.singerNameChanged(event.target.value)}
-                            margin="normal"
-                        />
-                        <TextField
-                            label="IP Address"
-                            className={classes.textField}
-                            value={this.props.sessionIp}
-                            onChange={event => this.props.joinIpChanged(event.target.value)}
-                            margin="normal"
-                        />
-                        {button}
+                      <Grid container alignItems="center">
+                        <Grid item xs={12} sm={6} md={5}>
+                          <TextField
+                              label="Singer Name"
+                              className={classes.textField}
+                              value={this.props.singerName}
+                              onChange={event => this.props.singerNameChanged(event.target.value)}
+                              margin="normal"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={5}>
+                          <TextField
+                              label="IP Address"
+                              className={classes.textField}
+                              value={this.props.sessionIp}
+                              onChange={event => this.props.joinIpChanged(event.target.value)}
+                              margin="normal"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={2}>
+                          {button}
+                        </Grid>
+                      </Grid>
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
             </div>
