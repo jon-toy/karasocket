@@ -9,6 +9,9 @@ const defaultState = {
   modalContent: null,
   searchResults: [],
   selectedSong: null,
+  nowPlaying: null,
+  upNext: null,
+  playerState: 'idle'
 };
 
 export default defaultState;

@@ -61,6 +61,8 @@ const styles = theme => ({
 class ConnectSession extends React.Component {
     state = {
         expanded: true,
+        singerNameError: false,
+        ipAddressError: false
       };
 
     handleChange = () => {
@@ -85,10 +87,20 @@ class ConnectSession extends React.Component {
         else {
             button = (
                 <Button variant="contained" color="primary" className={classes.button} onClick={() =>  {
-                    this.props.joinSession(this.props.sessionIp)
-                    this.setState({
-                        expanded: false
-                    });
+                    if (this.props.sessionIp && this.props.singerName && this.props.sessionIp.length > 0 && this.props.singerName.length > 0) {
+                        this.props.joinSession(this.props.sessionIp)
+                        this.setState({
+                            expanded: false
+                        });
+                    }
+                        
+                    else {
+                        this.setState({
+                            expanded: true,
+                            singerNameError: true,
+                            ipAddressError: true
+                        });
+                    }
                 }}>
                     Connect
                 </Button> 
@@ -99,28 +111,32 @@ class ConnectSession extends React.Component {
             <div className={classes.container}>
                 <ExpansionPanel className={classes.panel} expanded={this.state.expanded}>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} className={classes.status} onClick={this.handleChange}>
-                        <Typography className={classes.titleText} variant="subtitle2" align="center">Status: <span>{this.props.connected ? "Connected" : "Disconnected"}</span></Typography>
+                        <Typography className={classes.titleText} variant="subtitle2" align="center">{this.props.connected ? "Connected as " + this.props.singerName : "Status: Disconnected"}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.fields}>
                       <Grid container alignItems="center">
-                        <Grid item xs={12} sm={6} md={5}>
-                          <TextField
+                      {this.props.connected ? '' : <Grid item xs={12} sm={6} md={5}>
+                         <TextField
                               label="Singer Name"
                               className={classes.textField}
                               value={this.props.singerName}
                               onChange={event => this.props.singerNameChanged(event.target.value)}
                               margin="normal"
+                              required={true}
+                              error={this.state.singerNameError}
                           />
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={5}>
+                        </Grid>}
+                        {this.props.connected ? '' : <Grid item xs={12} sm={6} md={5}>
                           <TextField
                               label="IP Address"
                               className={classes.textField}
                               value={this.props.sessionIp}
                               onChange={event => this.props.joinIpChanged(event.target.value)}
                               margin="normal"
+                              required={true}
+                              error={this.state.ipAddressError}
                           />
-                        </Grid>
+                        </Grid>}
                         <Grid item xs={12} sm={12} md={2}>
                           {button}
                         </Grid>
@@ -135,7 +151,8 @@ class ConnectSession extends React.Component {
 function mapStateToProps(state) {
     return {
         sessionIp: state.sessionIp,
-        connected: state.connected
+        connected: state.connected,
+        singerName: state.singerName
     };
   }
 

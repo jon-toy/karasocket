@@ -14,3 +14,7 @@ export const SEARCH = "search";
 export const SEARCH_TERM_CHANGED = "search_term_changed";
 
 export const SONG_SELECTED = "song_selected";
+
+// Player
+export const PLAYER_STATE_UPDATED = "player_state_updated";
+

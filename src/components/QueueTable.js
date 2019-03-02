@@ -7,8 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { connect } from 'react-redux';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -21,10 +22,18 @@ const CustomTableCell = withStyles(theme => ({
 }))(TableCell);
 
 const styles = theme => ({
-  root: {
+  card: {
+    display: 'flex',
+    overflowX: 'scroll'
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
+    textAlign: 'center'
+  },
+  content: {
+    flex: '1 0 auto',
   },
   table: {
     
@@ -40,31 +49,38 @@ function QueueTable(props) {
   const { classes } = props;
 
   return (
-    <Paper className={classes.root}>
-      <Typography variant="h6" align="center">
-        Current Queue
-      </Typography>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <CustomTableCell align="center">Singer</CustomTableCell>
-            <CustomTableCell align="center">Song</CustomTableCell>
-            <CustomTableCell align="center">Artist</CustomTableCell>
-            <CustomTableCell align="center">Duration</CustomTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.queue.map((row, index) => (
-            <TableRow className={classes.row} key={index}>
-              <CustomTableCell align="left">{row.singer}</CustomTableCell>
-              <CustomTableCell align="left">{row.title}</CustomTableCell>
-              <CustomTableCell align="left">{row.artist}</CustomTableCell>
-              <CustomTableCell align="left">{row.duration}</CustomTableCell>
+    <Card className={classes.card}>
+        
+      <div className={classes.details}>
+        <CardHeader
+            title="Current Queue"
+        />
+        <div className={classes.cardContent}>
+          <CardContent className={classes.content}>
+          <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <CustomTableCell align="left">Singer</CustomTableCell>
+              <CustomTableCell align="left">Song</CustomTableCell>
+              <CustomTableCell align="left">Artist</CustomTableCell>
+              <CustomTableCell align="left">Duration</CustomTableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {props.queue.map((row, index) => (
+              <TableRow className={classes.row} key={index}>
+                <CustomTableCell align="left">{row.singer}</CustomTableCell>
+                <CustomTableCell align="left">{row.title}</CustomTableCell>
+                <CustomTableCell align="left">{row.artist}</CustomTableCell>
+                <CustomTableCell align="left">{row.duration}</CustomTableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+          </CardContent>
+        </div>
+      </div>
+    </Card>
   );
 }
 

@@ -13,6 +13,8 @@ import { hideModal } from './redux/actionCreators';
 import { MODAL_SEARCH } from './constants';
 import SearchResults from './components/modals/SearchResults';
 import Slide from '@material-ui/core/Slide';
+import NowPlaying from './components/NowPlaying';
+import UpNext from './components/UpNext';
 
 const theme = createMuiTheme({
   palette: {
@@ -64,8 +66,15 @@ class App extends React.Component {
                 <Grid item xs={11} sm={10}>
                   <ConnectSession/>
                 </Grid>
+                
+                <Grid item xs={11} sm={5}>
+                  {this.props.connected ? <NowPlaying/> : ''}
+                </Grid>
+                <Grid item xs={11} sm={5}>
+                  {this.props.connected ? <UpNext/> : ''}
+                </Grid>
                 <Grid item xs={11} sm={10}>
-                  <QueueTable/>
+                  {this.props.connected ? <QueueTable/> : ''}
                 </Grid>
               </Grid>
                 <Dialog
@@ -88,7 +97,8 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     modalContent: state.modalContent,
-    modalShow: state.modalShow
+    modalShow: state.modalShow,
+    connected: state.connected
   }
 }
 

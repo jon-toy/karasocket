@@ -8,14 +8,35 @@ import {
   SEARCH, 
   SHOW_MODAL,
   HIDE_MODAL,
-  SONG_SELECTED
+  SONG_SELECTED,
+  PLAYER_STATE_UPDATED
 } from "./actionTypes";
   
   export default function Reducer(state = {}, action = {}) {
     switch (action.type) {
       case QUEUE_UPDATED:
         const queue = action.payload;
-        return { ...state, queue };
+        let nowPlaying = state.nowPlaying;
+        let upNext = state.upNext;
+        if (queue.length > 0) {
+          let first = queue[0];
+          if (first.status === 'playing') {
+            // Song in progress
+            nowPlaying = first;
+
+            if (queue.length > 1) 
+              upNext = queue[1];
+          }
+          else if (first.status === 'ready') {
+            // No song playing
+            upNext = first;
+          }
+          else if (first.status === 'loading') {
+            // No song playing
+            upNext = first;
+          }
+        }
+        return { ...state, queue, nowPlaying, upNext };
       case JOIN_IP_CHANGED:
         const sessionIp = action.payload;
         return { ...state, sessionIp};
@@ -40,6 +61,9 @@ import {
       case SONG_SELECTED:
         const selectedSong = action.payload;
         return { ...state, selectedSong }
+      case PLAYER_STATE_UPDATED: 
+        const playerState = action.payload;
+        return { ...state, playerState }
       default:
         return state;
     }

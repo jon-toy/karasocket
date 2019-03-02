@@ -48,6 +48,11 @@ export function hideModal() {
 
 export function addToQueue(id, singer) {
     return () => {
+        singer = singer.replace(/&/g, '&amp;')
+               .replace(/</g, '&lt;')
+               .replace(/>/g, '&gt;')
+               .replace(/"/g, '&quot;')
+               .replace(/'/g, '&apos;');
         sendMessage('<action type="addToQueue" song="' + id + '" singer="' + singer + '" >99999</action>')
     }
 }
@@ -56,5 +61,23 @@ export function selectSong(id) {
     return {
         type: SONG_SELECTED,
         payload: id
+    }
+}
+
+export function playerControlPlay() {
+    return () => {
+        sendMessage('<action type="play"></action>')
+    }
+}
+
+export function playerControlPause() {
+    return () => {
+        sendMessage('<action type="pause"></action>')
+    }
+}
+
+export function playerControlNext() {
+    return () => {
+        sendMessage('<action type="next"></action>')
     }
 }

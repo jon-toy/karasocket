@@ -1,4 +1,4 @@
-import { JOIN_SESSION, DISCONNECTED, QUEUE_UPDATED, SEARCH, SHOW_MODAL } from './redux/actionTypes';
+import { JOIN_SESSION, DISCONNECTED, QUEUE_UPDATED, SEARCH, SHOW_MODAL, PLAYER_STATE_UPDATED } from './redux/actionTypes';
 import { hideModal } from './redux/actionCreators';
 import convert from 'xml-js'; 
 import { getQueueFromXmlResponse, getListFromXmlResponse } from './karafunXml';
@@ -13,7 +13,7 @@ export function initializeWebSocket(dispatch, ip) {
     
         websocket.onmessage = message => {
             let response = convert.xml2js(message.data, {compact: true});
-            console.log(response);
+            //console.log(response);
 
             if (response.status && response.status.queue) {
                 let queue = getQueueFromXmlResponse(response.status.queue);
@@ -23,6 +23,13 @@ export function initializeWebSocket(dispatch, ip) {
                 })
 
                 dispatch(hideModal());
+            }
+
+            if (response.status && response.status._attributes.state) {
+                dispatch ({
+                    type: PLAYER_STATE_UPDATED,
+                    payload: response.status._attributes.state
+                })
             }
 
             if (response.list) {
