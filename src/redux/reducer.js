@@ -26,15 +26,25 @@ import {
 
             if (queue.length > 1) 
               upNext = queue[1];
+            else 
+              upNext = null;
           }
           else if (first.status === 'ready') {
+            nowPlaying = null;
+
             // No song playing
             upNext = first;
           }
           else if (first.status === 'loading') {
+            nowPlaying = null;
+
             // No song playing
             upNext = first;
           }
+        }
+        else {
+          nowPlaying = null;
+          upNext = null;
         }
         return { ...state, queue, nowPlaying, upNext };
       case JOIN_IP_CHANGED:

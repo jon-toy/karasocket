@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import { connect } from 'react-redux';
 import PlayerControls from './PlayerControls';
+import SingerAvatar from './SingerAvatar';
 
 const styles = theme => ({
   card: {
@@ -41,11 +41,7 @@ function UpNext(props) {
 
   let content = (
     <div className={classes.cardContentNada}>
-            <CardMedia
-                className={classes.cover}
-                image="/karafunlogo.png"
-                title="Generic Album Logo"
-            />
+        <SingerAvatar song={upNext}/>
         <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
                 {upNext && upNext.status === 'loading' ? 'Loading...' : 'Nothing coming up!'}
@@ -62,11 +58,7 @@ function UpNext(props) {
   if (upNext && upNext.status !== 'loading') {
     content = (
     <div className={classes.cardContent}>
-        <CardMedia
-            className={classes.cover}
-            image="/karafunlogo.png"
-            title="Generic Album Logo"
-        />
+        <SingerAvatar song={upNext}/>
         <CardContent className={classes.content}>
              <Typography component="h5" variant="h5">
                 {upNext.title}

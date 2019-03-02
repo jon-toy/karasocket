@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import { connect } from 'react-redux';
 import PlayerControls from './PlayerControls';
+import SingerAvatar from './SingerAvatar';
 
 const styles = theme => ({
   card: {
@@ -22,11 +22,7 @@ const styles = theme => ({
   content: {
     flex: '1 0 auto',
   },
-  cover: {
-    width: 151,
-    height: 151,
-    margin: 'auto'
-  },
+
   controls: {
     visibility: 'hidden',
     display: 'flex',
@@ -52,11 +48,7 @@ function NowPlaying(props) {
 
   let content = (
     <div className={classes.cardContentNada}>
-            <CardMedia
-                className={classes.cover}
-                image="/karafunlogo.png"
-                title="Generic Album Logo"
-            />
+        <SingerAvatar song={nowPlaying}/>
         <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
                 Nothing playing right now!
@@ -73,11 +65,7 @@ function NowPlaying(props) {
   if (nowPlaying) {
     content = (
     <div className={classes.cardContent}>
-        <CardMedia
-            className={classes.cover}
-            image="/karafunlogo.png"
-            title="Generic Album Logo"
-        />
+        <SingerAvatar song={nowPlaying}/>
         <CardContent className={classes.content}>
              <Typography component="h5" variant="h5">
                 {nowPlaying.title}
