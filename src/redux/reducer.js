@@ -2,6 +2,7 @@ import {
   QUEUE_UPDATED, 
   JOIN_IP_CHANGED, 
   SINGER_NAME_CHANGED, 
+  SINGER_COLOR_CHANGED,
   JOIN_SESSION, 
   DISCONNECTED, 
   SEARCH_TERM_CHANGED, 
@@ -53,6 +54,9 @@ import {
       case SINGER_NAME_CHANGED:
         const singerName = action.payload;
         return { ...state, singerName }
+      case SINGER_COLOR_CHANGED:
+        const singerColor = action.payload;
+        return { ...state, singerColor }
       case SEARCH_TERM_CHANGED:
         const searchTerm = action.payload;
         return { ...state, searchTerm }

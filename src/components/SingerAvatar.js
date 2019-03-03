@@ -15,7 +15,7 @@ const styles = theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: '100%',
-        background: theme.palette.primary.dark,
+        background: theme.palette.primary.light,
     },
     coverNotYou: {
         width: 151,
@@ -35,7 +35,7 @@ const styles = theme => ({
 
   
 function SingerAvatar(props) {
-    const { classes, song, singerName } = props;
+    const { classes, song, singerName, singerColor } = props;
 
     let cover = classes.coverNotYou;
     if (song && song.singer === singerName ) 
@@ -52,7 +52,8 @@ function SingerAvatar(props) {
 
 function mapStateToProps(state) {
     return {
-        singerName: state.singerName
+        singerName: state.singerName,
+        singerColor: state.singerColor
     }
   }
   

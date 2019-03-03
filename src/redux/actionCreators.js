@@ -1,5 +1,11 @@
 import {initializeWebSocket, sendMessage, closeWebSocket } from '../websocket';
-import { JOIN_IP_CHANGED, SINGER_NAME_CHANGED, SEARCH_TERM_CHANGED, HIDE_MODAL, SONG_SELECTED } from './actionTypes';
+import { 
+    JOIN_IP_CHANGED, 
+    SINGER_NAME_CHANGED, 
+    SEARCH_TERM_CHANGED, 
+    HIDE_MODAL, 
+    SONG_SELECTED,
+    SINGER_COLOR_CHANGED } from './actionTypes';
 
 export function joinIpChanged(ip) {
     return {
@@ -12,6 +18,13 @@ export function singerNameChanged(name) {
     return {
         type: SINGER_NAME_CHANGED,
         payload: name
+    }
+}
+
+export function singerColorChanged(color) {
+    return {
+        type: SINGER_COLOR_CHANGED,
+        payload: color
     }
 }
 

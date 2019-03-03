@@ -11,7 +11,8 @@ const defaultState = {
   selectedSong: null,
   nowPlaying: null,
   upNext: null,
-  playerState: 'idle'
+  playerState: 'idle',
+  singerColor: '#e91e63'
 };
 
 export default defaultState;
