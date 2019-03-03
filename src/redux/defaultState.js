@@ -1,5 +1,5 @@
 const defaultState = {
-  singerName: "",
+  singerName: localStorage.getItem("singerName"),
   sessionIp: "68.231.71.239",
   connected: false,
   currentSong: {},

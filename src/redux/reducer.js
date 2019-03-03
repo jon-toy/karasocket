@@ -53,6 +53,8 @@ import {
         return { ...state, sessionIp};
       case SINGER_NAME_CHANGED:
         const singerName = action.payload;
+
+        localStorage.setItem("singerName", singerName);
         return { ...state, singerName }
       case SINGER_COLOR_CHANGED:
         const singerColor = action.payload;
