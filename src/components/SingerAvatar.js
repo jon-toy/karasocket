@@ -35,7 +35,7 @@ const styles = theme => ({
 
   
 function SingerAvatar(props) {
-    const { classes, song, singerName, singerColor } = props;
+    const { classes, song, singerName } = props;
 
     let cover = classes.coverNotYou;
     if (song && song.singer === singerName ) 

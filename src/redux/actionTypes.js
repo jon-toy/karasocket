@@ -5,6 +5,7 @@ export const SINGER_COLOR_CHANGED = "singer_color_changed";
 
 export const JOIN_SESSION = "join_session";
 export const DISCONNECTED = "disconnected";
+export const RECONNECTING = "reconnecting";
 
 export const QUEUE_UPDATED = "queue_updated";
 

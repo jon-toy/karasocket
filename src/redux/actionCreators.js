@@ -41,8 +41,8 @@ export function leaveSession() {
 }  
 
 export function doSearch(term) {
-    return () => {
-        sendMessage('<action type="search" offset="{offset}" limit="{limit}">' + term + '</action>')
+    return (dispatch) => {
+        sendMessage('<action type="search" offset="{offset}" limit="{limit}">' + term + '</action>', dispatch)
     };
 }
 
@@ -60,13 +60,15 @@ export function hideModal() {
 }
 
 export function addToQueue(id, singer) {
-    return () => {
+    return (dispatch) => {
         singer = singer.replace(/&/g, '&amp;')
                .replace(/</g, '&lt;')
                .replace(/>/g, '&gt;')
                .replace(/"/g, '&quot;')
                .replace(/'/g, '&apos;');
-        sendMessage('<action type="addToQueue" song="' + id + '" singer="' + singer + '" >99999</action>')
+        sendMessage('<action type="addToQueue" song="' + id + '" singer="' + singer + '" >99999</action>', dispatch)
+
+        dispatch(searchTermChanged(''));
     }
 }
 
@@ -78,19 +80,19 @@ export function selectSong(id) {
 }
 
 export function playerControlPlay() {
-    return () => {
-        sendMessage('<action type="play"></action>')
+    return (dispatch) => {
+        sendMessage('<action type="play"></action>', dispatch)
     }
 }
 
 export function playerControlPause() {
-    return () => {
-        sendMessage('<action type="pause"></action>')
+    return (dispatch) => {
+        sendMessage('<action type="pause"></action>', dispatch)
     }
 }
 
 export function playerControlNext() {
-    return () => {
-        sendMessage('<action type="next"></action>')
+    return (dispatch) => {
+        sendMessage('<action type="next"></action>', dispatch)
     }
 }

@@ -111,7 +111,7 @@ class ConnectSession extends React.Component {
             <div className={classes.container}>
                 <ExpansionPanel className={classes.panel} expanded={this.state.expanded}>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>} className={classes.status} onClick={this.handleChange}>
-                        <Typography className={classes.titleText} variant="subtitle2" align="center">{this.props.connected ? "Connected as " + this.props.singerName : "Status: Disconnected"}</Typography>
+                        <Typography className={classes.titleText} variant="subtitle2" align="center">{this.props.connected ? "Connected as " + this.props.singerName : (this.props.reconnecting ? "Reconnecting..." : "Status: Disconnected")}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails className={classes.fields}>
                       <Grid container alignItems="center">
@@ -152,6 +152,7 @@ function mapStateToProps(state) {
     return {
         sessionIp: state.sessionIp,
         connected: state.connected,
+        reconnecting: state.reconnecting,
         singerName: state.singerName
     };
   }

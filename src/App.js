@@ -13,8 +13,7 @@ import { hideModal } from './redux/actionCreators';
 import { MODAL_SEARCH } from './constants';
 import SearchResults from './components/modals/SearchResults';
 import Slide from '@material-ui/core/Slide';
-import NowPlaying from './components/NowPlaying';
-import UpNext from './components/UpNext';
+import PlayerCard from './components/PlayerCard';
 
 const theme = createMuiTheme({
   palette: {
@@ -68,10 +67,24 @@ class App extends React.Component {
                 </Grid>
                 
                 <Grid item xs={11} sm={5}>
-                  {this.props.connected ? <NowPlaying/> : ''}
+                  {this.props.connected ? <PlayerCard 
+                      song={this.props.nowPlaying} 
+                      defaultTitle={"Nothing Playing Right Now!"} 
+                      defaultArtist={"\r"}
+                      defaultSinger={"Hit Play or Add a Song!"}
+                      title={"Now Playing"}
+                      showControls={this.props.nowPlaying !== null}
+                  /> : ''}
                 </Grid>
                 <Grid item xs={11} sm={5}>
-                  {this.props.connected ? <UpNext/> : ''}
+                  {this.props.connected ? <PlayerCard 
+                        song={this.props.upNext} 
+                        defaultTitle={this.props.upNext && this.props.upNext.status === 'loading' ? 'Loading...' : 'Nothing coming up!'}
+                        defaultArtist={"\r"}
+                        defaultSinger={this.props.upNext && this.props.upNext.status === 'loading' ? '' : 'Add a Song!'}
+                        title={"Up Next"}
+                        showControls={this.props.upNext !== null && this.props.nowPlaying === null}
+                    /> : ''}
                 </Grid>
                 <Grid item xs={11} sm={10}>
                   {this.props.connected ? <QueueTable/> : ''}
@@ -98,7 +111,9 @@ function mapStateToProps(state) {
   return {
     modalContent: state.modalContent,
     modalShow: state.modalShow,
-    connected: state.connected
+    connected: state.connected,
+    nowPlaying: state.nowPlaying,
+    upNext: state.upNext
   }
 }
 

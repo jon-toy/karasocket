@@ -48,7 +48,8 @@ function SearchResults(props) {
                             <ListItem 
                                 button 
                                 selected={selectedSong === row.id}
-                                onClick={() => selectSong(row.id)}>
+                                onClick={() => selectSong(row.id)}
+                                key={row.id}>
                                 <ListItemText primary={row.title} secondary={row.artist} />
                             </ListItem>
                             <Divider/>

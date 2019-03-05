@@ -1,4 +1,4 @@
-import { JOIN_SESSION, DISCONNECTED, QUEUE_UPDATED, SEARCH, SHOW_MODAL, PLAYER_STATE_UPDATED } from './redux/actionTypes';
+import { JOIN_SESSION, DISCONNECTED, QUEUE_UPDATED, SEARCH, SHOW_MODAL, PLAYER_STATE_UPDATED, RECONNECTING } from './redux/actionTypes';
 import { hideModal } from './redux/actionCreators';
 import convert from 'xml-js'; 
 import { getQueueFromXmlResponse, getListFromXmlResponse } from './karafunXml';
@@ -10,6 +10,18 @@ export function initializeWebSocket(dispatch, ip) {
     // Websockets!
     try {
         websocket = new WebSocket('ws://' + ip + ':57570');
+
+        // Attempt to reconnect after the socket dies
+        websocket.onclose = e => {
+            console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+            dispatch({
+                type: RECONNECTING
+            });
+
+            setTimeout(function() {
+              initializeWebSocket(dispatch, ip);
+            }, 1000);
+          };
     
         websocket.onmessage = message => {
             let response = convert.xml2js(message.data, {compact: true});
@@ -45,11 +57,11 @@ export function initializeWebSocket(dispatch, ip) {
                     payload: MODAL_SEARCH
                 })
             }
-        };
 
-        dispatch({
-            type: JOIN_SESSION
-        });  
+            dispatch({
+                type: JOIN_SESSION
+            }); 
+        }; 
     }
     catch(err) {
         console.log(err);
@@ -57,16 +69,21 @@ export function initializeWebSocket(dispatch, ip) {
             type: DISCONNECTED
         });
     }
-    
 }
 
 export function closeWebSocket(dispatch) {
-    if (websocket) websocket.close();
+    if (websocket) {
+        websocket.onclose = e => {}
+        websocket.close();
+    }
     dispatch({
         type: DISCONNECTED
     });
 }
 
-export function sendMessage(message) {
-    if (websocket) websocket.send(message);
+export function sendMessage(message, dispatch) {
+    if (websocket) 
+        websocket.send(message);
+    else 
+        closeWebSocket(dispatch);
 }

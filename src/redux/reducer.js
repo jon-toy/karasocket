@@ -10,7 +10,8 @@ import {
   SHOW_MODAL,
   HIDE_MODAL,
   SONG_SELECTED,
-  PLAYER_STATE_UPDATED
+  PLAYER_STATE_UPDATED,
+  RECONNECTING
 } from "./actionTypes";
   
   export default function Reducer(state = {}, action = {}) {
@@ -66,6 +67,8 @@ import {
         return { ...state , connected: true }
       case DISCONNECTED:
         return { ...state, connected: false, searchResults: [], queue: [] }
+      case RECONNECTING:
+        return { ...state, connected: false, reconnecting: true}
       case SEARCH:
         const searchResults = action.payload;
         return { ...state, searchResults }
