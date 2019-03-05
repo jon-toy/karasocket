@@ -44,6 +44,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Jon Hirsch for teaching me how to use websockets
+* [Jon Hirsch](https://github.com/Jon-Hirsch) for teaching me how to use websockets
 * Our karaoke guests and first users: Eric, Ronnie, Tami, Michelle, Ashlae, Terrence, Nefertiti, Isaac, Dana, Nam, Steven, Ethan, and Kristen!
 * Cuphead for frustrating me so much that I needed to work on this to take a break from it
