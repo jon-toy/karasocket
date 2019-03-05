@@ -32,7 +32,6 @@ to run your local development server on localhost:3000.
 ## Authors
 
 * **Jon Toy** - *Main Developer* - [jon-toy](https://github.com/jon-toy)
-
 * **Jessica Swanson** - *UI/UX Development* - [jlswanson](https://github.com/jlswanson)
 
 See also the list of [contributors](https://github.com/jon-toy/karasocket/graphs/contributors) who participated in this project.
