@@ -4,6 +4,8 @@ KaraSocket is a React/Redux web application used to connect to instances of Kara
 
 KaraSocket allows karaoke-goers to remotely search, add songs to the queue, view status of the queue, and kick off songs! This is especially handy at house parties where it's too crowded or cumbersome to have everyone huddle around the computer, and they can instead use their mobile devices.
 
+http://karasocket.com
+
 ### Installation
 
 Clone this repo, then run
