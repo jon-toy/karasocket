@@ -2,7 +2,7 @@ const defaultState = {
   singerName: localStorage.getItem("singerName"),
   sessionIp: "68.231.71.239",
   connected: false,
-  reconnecting: true,
+  reconnecting: false,
   currentSong: {},
   searchTerm: "",
   queue: [],
