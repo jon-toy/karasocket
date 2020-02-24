@@ -6,8 +6,6 @@ import QueueTable from './components/QueueTable';
 import ConnectSession from './components/ConnectSession';
 import Grid from '@material-ui/core/Grid';
 import { MuiThemeProvider, createMuiTheme, withStyles } from '@material-ui/core/styles';
-import pink from '@material-ui/core/colors/pink';
-import lightGreen from '@material-ui/core/colors/lightGreen';
 import Dialog from '@material-ui/core/Dialog';
 import { hideModal } from './redux/actionCreators';
 import { MODAL_SEARCH } from './constants';
@@ -17,12 +15,48 @@ import PlayerCard from './components/PlayerCard';
 
 const theme = createMuiTheme({
   palette: {
-    primary: pink,
-    secondary: lightGreen
+    primary: {
+      light: '#8CF2FF',
+      main: '#41E9FF',
+      dark: '#207480',
+      contrastText: '#000000'
+    },
+    secondary: {
+      light: '#80FFC8',
+      main: '#33FFA5',
+      dark: '#29CC85',
+      contrastText: '#000000'
+    }
   },
   typography: {
     useNextVariants: true,
   },
+  overrides: {
+    MuiAppBar: {
+      colorPrimary: {
+        background: 'linear-gradient(90deg, rgba(32,116,128,1) 0%, rgba(41,204,133,1) 100%)',
+        color: '#fff'
+      }
+    },
+    MuiTypography: {
+      h6: {
+        fontSize: '1rem',
+        fontWeight: '200',
+        letterSpacing: '4px',
+        textTransform: 'uppercase'
+      }
+    },
+    MuiButton: {
+      containedPrimary: {
+        background: 'linear-gradient(90deg, rgba(32,116,128,1) 0%, rgba(41,204,133,1) 100%)',
+        color: '#fff'
+      },
+      label: {
+        fontWeight: '200',
+        letterSpacing: '2px',
+      }
+    }
+  }
 });
 
 const styles = theme => ({
