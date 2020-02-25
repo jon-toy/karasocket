@@ -40,12 +40,6 @@ export function leaveSession() {
     };
 }  
 
-export function doSearch(term) {
-    return (dispatch) => {
-        sendMessage('<action type="search" offset="{offset}" limit="{limit}">' + term + '</action>', dispatch)
-    };
-}
-
 export function searchTermChanged(term) {
     return {
         type: SEARCH_TERM_CHANGED,
@@ -59,7 +53,68 @@ export function hideModal() {
     }
 }
 
+export function selectSong(id) {
+    return {
+        type: SONG_SELECTED,
+        payload: id
+    }
+}
+
+export function doSearch(term) {
+    return (dispatch) => {
+        sendMessage('<action type="search" offset="{offset}" limit="{limit}">' + term + '</action>', dispatch)
+    };
+}
+
+/**
+ * Makes a generic action call to KaraFun
+ * @param {*} type play, pause, seek, next, pitch, tempo
+ * @param {*} value Can be left blank
+ */
+function genericAction(type, value) {
+    return (dispatch) => {
+        sendMessage('<action type="' + type + '">' + (value !== null ? value : '') + '</action>', dispatch)
+    }
+}
+
+// Player Controls
+
+export function playerControlPlay() {
+    return genericAction('play');
+}
+
+export function playerControlPause() {
+    return genericAction('pause');
+}
+
+export function playerControlNext() {
+    return genericAction('next');
+} 
+
+export function playerControlSeek(value) {
+    return genericAction('seek', value);
+} 
+
+export function playerControlPitch(value) {
+    return genericAction('pitch', value);
+} 
+
+export function playerControlTempo(value) {
+    return genericAction('tempo', value);
+} 
+
+// Queue Management
+
+export function queueClear() {
+    return genericAction('clearQueue')
+}
+
+// TODO Remove this later (not now to avoid merge conflicts)
 export function addToQueue(id, singer) {
+    return queueAdd(id, singer);
+}
+
+export function queueAdd(id, singer) {
     return (dispatch) => {
         singer = singer.replace(/&/g, '&amp;')
                .replace(/</g, '&lt;')
@@ -72,27 +127,42 @@ export function addToQueue(id, singer) {
     }
 }
 
-export function selectSong(id) {
-    return {
-        type: SONG_SELECTED,
-        payload: id
+export function queueRemove(index) {
+    return (dispatch) => {
+        sendMessage('<action type="removeFromQueue" id="' + index + '"></action>', dispatch)
     }
 }
 
-export function playerControlPlay() {
+export function queueChangePosition(oldIndex, newIndex) {
     return (dispatch) => {
-        sendMessage('<action type="play"></action>', dispatch)
+        sendMessage('<action type="changeQueuePosition" id="' + oldIndex + '">' + newIndex + '</action>', dispatch)
     }
 }
 
-export function playerControlPause() {
+// Volume Controls
+
+function setVolume(volumeType, value) {
     return (dispatch) => {
-        sendMessage('<action type="pause"></action>', dispatch)
+        sendMessage('<action type="setVolume" volume_type="' + volumeType + '">' + value + '</action>', dispatch)
     }
 }
 
-export function playerControlNext() {
-    return (dispatch) => {
-        sendMessage('<action type="next"></action>', dispatch)
-    }
+export function setVolumeGeneral(value) {
+    return setVolume('general', value);
+}
+
+export function setVolumeBackgroundVocals(value) {
+    return setVolume('bv', value);
+}
+
+export function setVolumeLead(value) {
+    return setVolume('lead1', value);
+}
+
+export function setVolumeLead2(value) {
+    return setVolume('lead2', value);
+}
+
+export function magicButton() {
+    return playerControlTempo(10);
 }
