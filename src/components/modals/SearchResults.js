@@ -68,9 +68,6 @@ function SearchResults(props) {
                                 <Button className={`${props.classes.searchButtons} ${props.classes.queueAdd}`} onClick={() => addToQueue(row.id, singerName)}>
                                     <Add></Add>
                                 </Button>
-                                <Button className={`${props.classes.searchButtons} ${props.classes.queueEdit}`} onClick={() => editQueueOptions(row.id, singerName)}>
-                                    <Edit></Edit>
-                                </Button>
                             </ListItem>
                             <Divider/>
                         </div>
