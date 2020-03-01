@@ -8,6 +8,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Add from '@material-ui/icons/Add';
+import Edit from '@material-ui/icons/Edit';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
@@ -17,11 +19,30 @@ const styles = theme => ({
     appBar: {
         position: 'relative',
         width: '100%'
-      },
+    },
     flex: {
         flex: 1,
     },
-  });
+    searchButtons: {
+        color: '#fff',
+        minWidth: 'unset',
+        '&:first-of-type': {
+            marginRight: '8px'
+        }
+    },
+    queueAdd: {
+        background: theme.palette.primary.dark,
+        '&:hover': {
+            background: theme.palette.primary.main
+        },
+    },
+    queueEdit: {
+        background: theme.palette.secondary.dark,
+        '&:hover': {
+            background: theme.palette.secondary.main
+        },
+    },
+});
 
 function SearchResults(props) {
     const { classes, singerName, addToQueue, hideModal, selectedSong, selectSong } = props;
@@ -36,21 +57,17 @@ function SearchResults(props) {
                 <Typography variant="h6" color="inherit" className={classes.flex}>
                     Search Results
                 </Typography>
-                <Button color="inherit" onClick={() => addToQueue(selectedSong, singerName)}>
-                    Add to Queue
-                </Button>
                 </Toolbar>
             </AppBar>
             <List>
                 {
                     props.searchResults.map(row => (
-                        <div>
-                            <ListItem 
-                                button 
-                                selected={selectedSong === row.id}
-                                onClick={() => selectSong(row.id)}
-                                key={row.id}>
+                        <div key={row.id}>
+                            <ListItem button>
                                 <ListItemText primary={row.title} secondary={row.artist} />
+                                <Button className={`${props.classes.searchButtons} ${props.classes.queueAdd}`} onClick={() => addToQueue(row.id, singerName)}>
+                                    <Add></Add>
+                                </Button>
                             </ListItem>
                             <Divider/>
                         </div>
@@ -75,6 +92,11 @@ function mapDispatchToProps(dispatch) {
         hideModal: () => dispatch(hideModal()),
         selectSong: (id) => dispatch(selectSong(id))
     }
+}
+
+function editQueueOptions(id, singerName) {
+    console.log('id: ', id)
+    console.log('singer name: ', singerName)
 }
   
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SearchResults));
