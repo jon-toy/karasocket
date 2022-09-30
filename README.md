@@ -33,6 +33,7 @@ to run your local development server on localhost:3000.
 
 * **Jon Toy** - *Main Developer* - [jon-toy](https://github.com/jon-toy)
 * **Jessica Swanson** - *UI/UX Development* - [jlswanson](https://github.com/jlswanson)
+* **Chris Swanson** - *:)*
 
 See also the list of [contributors](https://github.com/jon-toy/karasocket/graphs/contributors) who participated in this project.
 
@@ -43,6 +44,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
+* Chris for being cool
 * [Jon Hirsch](https://github.com/Jon-Hirsch) for teaching me how to use websockets
 * Our karaoke guests and first users: Eric, Ronnie, Tami, Michelle, Ashlae, Terrence, Nefertiti, Isaac, Dana, Nam, Steven, Ethan, and Kristen!
 * Cuphead for frustrating me so much that I needed to work on this to take a break from it
